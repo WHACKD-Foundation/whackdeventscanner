@@ -8,7 +8,7 @@ Scans the ETH chain from WHACKD's genesis block to find WHACKD! transactions.
 
 You can install them via:
 ```
-$ pip install tqdm web3$ pip install tqdm web3
+$ pip install tqdm web3
 ```
 
 # Usage
