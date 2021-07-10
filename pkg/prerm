@@ -1,0 +1,8 @@
+#!/bin/sh
+
+set -e
+if (systemctl is-active --quiet whackd.service)
+	then
+	systemctl stop whackd.service
+	systemctl disable whackd.service
+fi

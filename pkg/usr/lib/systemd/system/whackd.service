@@ -1,0 +1,23 @@
+[Unit]
+Description=WHACKD Event Scanner
+Wants=network-online.target
+After=network-online.target
+
+[Install]
+WantedBy=multi-user.target
+
+[Service]
+LimitNOFILE=4096
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=whackd
+PrivateDevices=yes
+PrivateTmp=yes
+ProtectSystem=full
+ProtectHome=yes
+
+User=whackd
+WorkingDirectory=/var/lib/whackd
+TimeoutSec=1200
+Restart=always
+ExecStart=/usr/bin/whackd ${WEB3_URL}
