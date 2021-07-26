@@ -1,0 +1,6 @@
+#!/bin/sh
+
+set -e
+rm -rf /var/lib/whackd
+rm -rf /usr/lib/systemd/system/whackd.service
+userdel whackd

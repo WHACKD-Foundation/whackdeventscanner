@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 """A stateful event scanner for Ethereum-based blockchains using Web3.py.
 
 With the stateful mechanism, you can do one batch scan or incremental scans,
@@ -467,10 +469,8 @@ if __name__ == "__main__":
         Simple load/store massive JSON on start up.
         """
 
-        def __init__(self, web3, contract):
+        def __init__(self):
             self.state = None
-            self.web3 = web3
-            self.contract = contract
             self.fname = "test-state.json"
             # How many second ago we saved the JSON file
             self.last_save = 0
@@ -539,14 +539,14 @@ if __name__ == "__main__":
             args = event["args"]
             # Only grab values that are 0, these are transactions that have been WHACKD
             if args.value == 0:
-                receipt = self.web3.eth.get_transaction_receipt(txhash)
-                logs = self.contract.events['Transfer']().processReceipt(receipt)
-                burnt_transfer = next((x for x in logs if x.args.to == BURN_ADDRESS), None)
-                burnt_whackd = self.web3.fromWei(burnt_transfer.args.value, 'ether')
+                # receipt = self.web3.eth.get_transaction_receipt(txhash)
+                # logs = self.contract.events['Transfer']().processReceipt(receipt)
+                # burnt_transfer = next((x for x in logs if x.args.to == BURN_ADDRESS), None)
+                # burnt_whackd = self.web3.fromWei(burnt_transfer.args.value, 'ether')
                 transfer = {
                     "from": args["from"],
                     "to": args.to,
-                    "value": str(burnt_whackd),
+                    "value": args.value,
                     "timestamp": block_when.isoformat(),
                 }
 
@@ -593,7 +593,7 @@ if __name__ == "__main__":
         ERC20 = web3.eth.contract(abi=abi)
 
         # Restore/create our persistent state
-        state = JSONifiedState(web3, ERC20)
+        state = JSONifiedState()
         state.restore()
 
         # chain_id: int, web3: Web3, abi: dict, state: EventScannerState, events: List, filters: {}, max_chunk_scan_size: int=10000
