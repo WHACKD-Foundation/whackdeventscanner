@@ -548,8 +548,9 @@ if __name__ == "__main__":
                 transfer = {
                     "from": args["from"],
                     "to": args.to,
-                    "value": str(burnt_whackd),
-                    "timestamp": block_when.isoformat(),
+                    "burnvalue": str(burnt_whackd),
+                    "burnconfirm": args.value,
+                    "timestamp": block_when.isoformat()
                 }
 
                 # Create empty dict as the block that contains all transactions by txhash
